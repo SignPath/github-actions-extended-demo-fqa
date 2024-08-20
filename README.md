@@ -12,22 +12,24 @@ This project demonstrates the following attempts to violate SignPath policies an
 
 * This step selects the appropriate [signing policy] depending on the branch name. The actual branch must match the branch condition of the selected signing policy. The [`attempt-signing-release`] branch demonstrates how SignPath will detect incorrect attempts.
 * The [`release/malicious-dll`] branch demonstrates how SignPath will detect content-level violations of the [artifact configuration].
+* The [`release/no-branch-rulesets`] branch demonstrates how SignPath can be configured to require certain branch ruleset rules.
 
 ## Configuration
 
-To use this demo with your own SignPath subscription, you need to get access to SignPath's GitHub Actions preview. Please contact support@signpath.io.
+To use this demo with your own SignPath subscription, you need to get access to SignPath's GitHub Actions integration and have the branch ruleset restriction enabled and configured. Please contact support@signpath.io.
 
 * Fork this repository
   * Uncheck _Copy the main branch only_
 * In your SignPath organization, create a project with 
   * Slug: `Demo_Application` 
-  * Repository URLs: Your forked GitHub repository, e.g. `https://github.com/my/github-actions-demo`
+  * Repository URLs: Your forked GitHub repository, e.g. `https://github.com/my/github-actions-extended-demo`
   * Trusted Build Systems: Link _GitHub.com_
   * Add the following artifact configuration as default: [.signpath/artifact-configurations/default.xml](.signpath/artifact-configurations/default.xml)
   * Add a `test-signing` signing policy
   * Add a `release-signing` signing policy with origin verification enabled and restricted to `main` and `release/*` branches
 * Create an [API token] in SignPath and add it as a GitHub Actions secret `SIGNPATH_API_TOKEN` (make sure the user is a submitter in your signing policies)
 * Add your SignPath _Organization ID_ as a GitHub Actions variable `SIGNPATH_ORGANIZATION_ID` (click your organization's name at the upper right corner)
+* For now, create an access token with `metadata:read` permissions on your repository and pass it as the `extended-verification-token`. _(Note: this will be replaced by GitHub App access soon.)_
 * Enable Actions for your GitHub repository
 
 
